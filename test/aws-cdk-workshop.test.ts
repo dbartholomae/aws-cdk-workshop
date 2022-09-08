@@ -4,14 +4,18 @@
 
 // example test. To run these tests, uncomment this file along with the
 // example resource in lib/aws-cdk-workshop-stack.ts
-test('SQS Queue Created', () => {
-//   const app = new cdk.App();
-//     // WHEN
-//   const stack = new AwsCdkWorkshop.AwsCdkWorkshopStack(app, 'MyTestStack');
-//     // THEN
-//   const template = Template.fromStack(stack);
+import {App} from 'aws-cdk-lib';
+import {AwsCdkWorkshopStack} from '../lib/aws-cdk-workshop-stack';
+import {Template} from 'aws-cdk-lib/assertions';
 
-//   template.hasResourceProperties('AWS::SQS::Queue', {
-//     VisibilityTimeout: 300
-//   });
+describe('Stack', () => {
+  it('contains a lambda', () => {
+    const app = new App();
+      // WHEN
+    const stack = new AwsCdkWorkshopStack(app, 'MyTestStack');
+      // THEN
+    const template = Template.fromStack(stack);
+
+    template.hasResource('AWS::Lambda::Function', {});
+  });
 });
