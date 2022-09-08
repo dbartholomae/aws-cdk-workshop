@@ -4,6 +4,7 @@ import { Construct } from "constructs";
 import { NodejsFunction } from "aws-cdk-lib/aws-lambda-nodejs";
 import { FunctionUrlAuthType } from "aws-cdk-lib/aws-lambda";
 import { Bucket } from "aws-cdk-lib/aws-s3";
+import { BucketDeployment, Source } from "aws-cdk-lib/aws-s3-deployment";
 
 export class AwsCdkWorkshopStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
@@ -18,6 +19,14 @@ export class AwsCdkWorkshopStack extends cdk.Stack {
       }
     });
     bucket.grantRead(fn);
+
+    new BucketDeployment(this, 'AddNotes', {
+      sources: [
+        Source.data('MyNote', "hello"),
+        Source.data('MyOtherNote', "hello"),
+      ],
+      destinationBucket: bucket
+    })
 
     const fnUrl = fn.addFunctionUrl({ authType: FunctionUrlAuthType.NONE });
 
