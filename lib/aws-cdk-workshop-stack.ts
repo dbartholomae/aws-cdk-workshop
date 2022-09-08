@@ -10,8 +10,9 @@ export class AwsCdkWorkshopStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
     const bucket = new Bucket(this, 'Bucket', {
-      removalPolicy: RemovalPolicy.DESTROY
-    })
+      removalPolicy: RemovalPolicy.DESTROY,
+      autoDeleteObjects: true
+    });
 
     const fn = new NodejsFunction(this, "workshop", {
       environment: {
